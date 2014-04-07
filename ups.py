@@ -230,7 +230,7 @@ class UPS(object):
         classification = client.factory.create('ns2:CodeDescriptionType')
         classification.Code = '00' # Get rates for the shipper account
 
-        shipment = self._create_shipment(client, packages, shipper, recipient, packaging_type, namespace='ns2')
+        shipment = self._create_shipment(client, packages, shipper, recipient, packaging_type, namespace='ns2', create_reference_number=False)
         shipment.ShipmentRatingOptions.NegotiatedRatesIndicator = ''
 
         try:
@@ -353,7 +353,7 @@ class UPS(object):
         if shipment.Shipper.Address.CountryCode != shipment.ShipTo.Address.CountryCode:
         	shipment.PaymentInformation.ShipmentCharge = [charge,charge2]
         else:
-        	ship.ent.PaymentInformation.ShipmentCharge = charge
+        	shipment.PaymentInformation.ShipmentCharge = charge
 
         shipment.Description = 'Shipment from %s to %s' % (shipper_address.name, recipient_address.name)
         shipment.Description = shipment.Description[:50]
